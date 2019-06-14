@@ -4,6 +4,7 @@ from __future__ import division
 import argparse
 import os
 from Bio import SeqIO
+import subprocess
 
 def main():
 	parser = argparse.ArgumentParser(description="Run the JS-CB algorithm on draft and complete genomes, to determine which genes are likely to be horizontally transferred. See Nucleic Acids Research 2007, 35, 4629-4639 and Open Biology 2017, 7, 170094.")
@@ -32,6 +33,9 @@ def main():
 	combined_gbk_path = os.path.join(output_dir, 'combined.gbk')
 	SeqIO.write(combined_record, combined_gbk_path, 'genbank')
 
+	# Now we can run JSCB
+	command_list = ['jscb.py', combined_gbk_path]
+	subprocess.call(command_list)
 
 
 main()
