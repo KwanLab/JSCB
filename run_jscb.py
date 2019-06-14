@@ -20,6 +20,8 @@ def main():
 	if not os.path.isdir(output_dir):
 		os.mkdir(output_dir)
 
+	initial_dir = os.getcwd()
+
 	# First we need to make a concatenated version of the genbank file
 	combined_record = None
 	for seq_record in SeqIO.parse(genbank_path, 'genbank'):
@@ -31,6 +33,7 @@ def main():
 	SeqIO.write(combined_record, combined_gbk_path, 'genbank')
 
 	# Now we can run JSCB
+	os.chdir(output_dir)
 	command_list = ['jscb.py', combined_gbk_path]
 	subprocess.call(command_list)
 
