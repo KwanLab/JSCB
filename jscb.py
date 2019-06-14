@@ -49,7 +49,7 @@ for gb_record in SeqIO.parse(sys.argv[1], "genbank"):
 			actend.append(z)
 	f1.close()			
 
-os.system("./jscb")
+os.system("jscb")
 
 gifile = open("JSCB_output.gi", "r")
 hashclussize = {}
