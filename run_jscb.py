@@ -23,13 +23,15 @@ def main():
 		os.mkdir(output_dir)
 
 	# First we need to make a concatenated version of the genbank file
-	seq_record_list = list()
+	combined_record = None
 	for seq_record in SeqIO.parse(genbank_path, 'genbank'):
-		seq_record_list.append(seq_record)
-	combined_record = sum(seq_record_list)
+		if combined_record == None:
+			combined_record = seq_record
+		else:
+			combined_record = combined_record + seq_record
 	combined_gbk_path = os.path.join(output_dir, 'combined.gbk')
 	SeqIO.write(combined_record, combined_gbk_path, 'genbank')
 
-	
+
 
 main()
