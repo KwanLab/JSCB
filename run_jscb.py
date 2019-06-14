@@ -25,7 +25,7 @@ def main():
 	# First we need to make a concatenated version of the genbank file
 	combined_record = None
 	for seq_record in SeqIO.parse(genbank_path, 'genbank'):
-		if combined_record == None:
+		if combined_record is None:
 			combined_record = seq_record
 		else:
 			combined_record = combined_record + seq_record
