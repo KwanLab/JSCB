@@ -120,7 +120,7 @@ def main():
 		else:
 			for contig_name in genomic_island_coordinates[gi_name]:
 				gene_string = ','.join(genomic_island_genes_by_contig[gi_name][contig_name])
-				output_string = '\t'.join(gi_name, contig_name, str([ genomic_island_coordinates[gi_name][contig_name][0]), str(genomic_island_coordinates[gi_name][contig_name][1]), gene_string ])
+				output_string = '\t'.join([ gi_name, contig_name, str(genomic_island_coordinates[gi_name][contig_name][0]), str(genomic_island_coordinates[gi_name][contig_name][1]), gene_string ])
 				output_table.write(output_string + '\n')
 
 main()
