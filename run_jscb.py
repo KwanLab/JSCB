@@ -27,8 +27,8 @@ def main():
 	# Mehul Jani suggested this as a way to stop genomic islands being called over contig
 	# junctions
 	script_path = os.path.abspath(os.path.dirname(sys.argv[0]))
-	16S_iterator = SeqIO.parse(os.path.join(script_path, 'E_coli_16S.gb'), 'genbank')
-	16S_record = next(16S_iterator)
+	rRNA_iterator = SeqIO.parse(os.path.join(script_path, 'E_coli_16S.gb'), 'genbank')
+	rRNA_record = next(rRNA_iterator)
 
 	# First we need to make a concatenated version of the genbank file
 	combined_record = None
@@ -36,7 +36,7 @@ def main():
 		if combined_record is None:
 			combined_record = seq_record
 		else:
-			combined_record = combined_record + 16S_record + 16S_record + 16S_record + seq_record
+			combined_record = combined_record + rRNA_record + rRNA_record + rRNA_record + seq_record
 	combined_gbk_path = os.path.join(output_dir, 'combined.gbk')
 	SeqIO.write(combined_record, combined_gbk_path, 'genbank')
 
