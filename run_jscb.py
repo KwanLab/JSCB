@@ -32,7 +32,14 @@ def main():
 
 	# First we need to make a concatenated version of the genbank file
 	combined_record = None
+	CDS_locus_tags = list() # Ordered list of CDS locus_tags so that we can assign them back to gene numbers later
+	CDS_lengths = list()
 	for seq_record in SeqIO.parse(genbank_path, 'genbank'):
+		for feature in seq_record.features:
+			if feature.type == 'CDS':
+				locus_tag = feature.qualifiers['locus_tag'][0]
+				CDS_locus_tags.append(locus_tag)
+				CDS_lengths.append(len(feature))
 		if combined_record is None:
 			combined_record = seq_record
 		else:
@@ -109,7 +116,7 @@ def main():
 							genomic_island_genes_by_contig[gi_name][contig_name] = [ locus_tag ]
 
 	# Now we make a human-readable output table
-	output_table_path = os.path.join(output_dir, 'hgt_genes_summary.tsv')
+	output_table_path = os.path.join(output_dir, 'genomic_islands_summary.tsv')
 	output_table = open(output_table_path, 'w')
 	output_table.write('GI_ID\tcontig\tstart\tend\tgenes\n')
 
@@ -130,5 +137,30 @@ def main():
 				gene_string = ','.join(genomic_island_genes_by_contig[gi_name][contig_name])
 				output_string = '\t'.join([ gi_name, contig_name, str(genomic_island_coordinates[gi_name][contig_name][0]), str(genomic_island_coordinates[gi_name][contig_name][1]), gene_string ])
 				output_table.write(output_string + '\n')
+	output_table.close()
+
+	# We also make a human readable version of JSCB_output.gi
+	output_table_path = os.path.join(output_dir, 'hgt_genes_summary.tsv')
+	output_table = open(output_table_path, 'w')
+	output_table.write('locus_tag\tcluster_id\tcluster_size\tgene_length\n')
+	jscb_output_path = os.path.join(output_dir, 'JSCB_output.gi')
+
+	with open(jscb_output_path) as jscb_output:
+		for line in jscb_output:
+			line_list = line.rstrip().split()
+			gene_index = int(line_list[0]) - 1
+			gene_length = int(line_list[3])
+
+			# Check gene length
+			if gene_length != CDS_lengths[gene_index]:
+				print ('Error! Gene length mismatch')
+				exit(1)
+
+			locus_tag = CDS_locus_tags[gene_index]
+
+			output_string = '\t'.join([locus_tag] + line_list[1:])
+			output_table.write(output_string + '\n')
+
+	output_table.close()
 
 main()
