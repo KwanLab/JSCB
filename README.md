@@ -18,13 +18,20 @@ First annotate your genome (we recommend the [Prokka](https://github.com/tseeman
 run_jscb.py --genbank input_genome.gbk --output_dir directory/path
 ```
 
-In the output directory, there will be a tab-delimited table called `hgt_genes_summary.tsv`, which has the following columns:
+In the output directory, there will be a tab-delimited table called `genomic_islands_summary.tsv`, which has the following columns:
 
 * Genomic island ID (GI_ID)
 * Contig
 * Start coordinate
 * End coordinate
 * Genes (comma-delimited list)
+
+There will also be a file called `hgt_genes_summary.tsv`, which has the following columns:
+
+* Locus tag
+* Cluster ID
+* Cluster size (number of genes)
+* Gene length
 
 Original README.md contents below
 ---------------------------------
