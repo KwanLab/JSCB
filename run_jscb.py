@@ -36,7 +36,7 @@ def main():
 		if combined_record is None:
 			combined_record = seq_record
 		else:
-			combined_record = combined_record + rRNA_record + rRNA_record + rRNA_record + seq_record
+			combined_record = combined_record + rRNA_record + rRNA_record + rRNA_record + rRNA_record + rRNA_record + rRNA_record + rRNA_record + rRNA_record + rRNA_record + rRNA_record + seq_record
 	combined_gbk_path = os.path.join(output_dir, 'combined.gbk')
 	SeqIO.write(combined_record, combined_gbk_path, 'genbank')
 
