@@ -33,6 +33,8 @@ There will also be a file called `hgt_genes_summary.tsv`, which has the followin
 * Cluster size (number of genes)
 * Gene length
 
+JSCB makes clusters of genes based on nucleotide composition, and so the cluster with the most genes (probably cluster 1) likely represents genes that have not been horizontally transferred. There can be another cluster with, for example, translation factors and ribosomal proteins, that represent highly-expressed genes. Other clusters may be horizontally-transferred.
+
 Original README.md contents below
 ---------------------------------
 
