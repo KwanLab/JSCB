@@ -33,13 +33,11 @@ def main():
 	# First we need to make a concatenated version of the genbank file
 	combined_record = None
 	CDS_locus_tags = list() # Ordered list of CDS locus_tags so that we can assign them back to gene numbers later
-	CDS_lengths = list()
 	for seq_record in SeqIO.parse(genbank_path, 'genbank'):
 		for feature in seq_record.features:
 			if feature.type == 'CDS':
 				locus_tag = feature.qualifiers['locus_tag'][0]
 				CDS_locus_tags.append(locus_tag)
-				CDS_lengths.append(len(feature))
 		if combined_record is None:
 			combined_record = seq_record
 		else:
@@ -149,12 +147,6 @@ def main():
 		for line in jscb_output:
 			line_list = line.rstrip().split()
 			gene_index = int(line_list[0]) - 1
-			gene_length = int(line_list[3])
-
-			# Check gene length
-			if gene_length != CDS_lengths[gene_index]:
-				print ('Error! Gene length mismatch')
-				exit(1)
 
 			locus_tag = CDS_locus_tags[gene_index]
 
